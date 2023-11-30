@@ -1,10 +1,14 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import Header from "./components/Header.jsx";
+import ShowList from "./components/Shows.jsx";
 import "./App.css";
 
 function App() {
-  return <div>jfkheriugerifhigh</div>;
+  return (
+    <div>
+      <Header />
+      <ShowList />
+    </div>
+  );
 }
 
 export default App;
