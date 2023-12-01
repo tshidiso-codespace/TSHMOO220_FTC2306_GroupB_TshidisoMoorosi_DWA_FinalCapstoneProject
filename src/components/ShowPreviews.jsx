@@ -1,14 +1,26 @@
 import React from "react";
 import { genres } from "../data.jsx";
+import Seasons from "./Seasons.jsx";
+import { useNavigate } from "react-router-dom";
 
-const ShowList = () => {
+const ShowPreviews = () => {
   const [allShows, setAllShows] = React.useState([]);
+  const navigate = useNavigate();
+  const [selectedShow, setSelectedShow] = React.useState(null);
 
   React.useEffect(() => {
     fetch("https://podcast-api.netlify.app/shows")
       .then((res) => res.json())
       .then((data) => setAllShows(data));
   }, []);
+
+  const handleShowSelect = (showId) => {
+    const selectedShow = allShows.find((show) => show.id === showId);
+    if (selectedShow) {
+      // Use navigate to change the URL and navigate to the Seasons component
+      navigate(`/seasons/${showId}`, { state: { show: selectedShow } });
+    }
+  };
 
   return (
     <div>
@@ -21,10 +33,14 @@ const ShowList = () => {
           <p>
             Genres: {show.genres.map((genreId) => genres[genreId]).join(", ")}
           </p>
+          <button onClick={() => handleShowSelect(show.id)}>
+            View Seasons
+          </button>
         </div>
       ))}
+      {selectedShow && <Seasons show={selectedShow} />}
     </div>
   );
 };
 
-export default ShowList;
+export default ShowPreviews;

@@ -1,12 +1,18 @@
+// App.jsx
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header.jsx";
-import ShowList from "./components/Shows.jsx";
-import "./App.css";
+import ShowPreviews from "./components/ShowPreviews.jsx";
+import Seasons from "./components/Seasons.jsx";
 
 function App() {
   return (
     <div>
       <Header />
-      <ShowList />
+      <Routes>
+        <Route path="/seasons/:id" element={<Seasons />} />
+        <Route path="/" element={<ShowPreviews />} />
+      </Routes>
     </div>
   );
 }
