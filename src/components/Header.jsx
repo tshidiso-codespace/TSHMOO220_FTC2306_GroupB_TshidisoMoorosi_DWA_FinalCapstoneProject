@@ -14,6 +14,7 @@ export default function Header() {
       />
       <h2 className="header--title">Tshidiso's Podcast App</h2>
       <button onClick={() => navigate("/favourites")}>Favourites</button>
+      <img src="../images/sort.png" className="sort--icon" />
     </header>
   );
 }

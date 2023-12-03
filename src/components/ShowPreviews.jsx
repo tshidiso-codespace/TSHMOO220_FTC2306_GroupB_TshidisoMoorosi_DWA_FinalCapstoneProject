@@ -7,6 +7,7 @@ const ShowPreviews = () => {
   const [allShows, setAllShows] = React.useState([]);
   const navigate = useNavigate();
   const [selectedShow, setSelectedShow] = React.useState(null);
+  const [selectedSort, setSelectedSort] = React.useState("title"); // Default sort by title
 
   React.useEffect(() => {
     fetch("https://podcast-api.netlify.app/shows")
@@ -22,9 +23,37 @@ const ShowPreviews = () => {
     }
   };
 
+  const handleSortChange = (event) => {
+    setSelectedSort(event.target.value);
+  };
+
+  const getSortedShows = () => {
+    switch (selectedSort) {
+      case "titleAZ":
+        return [...allShows].sort((a, b) => a.title.localeCompare(b.title));
+      case "titleZA":
+        return [...allShows].sort((a, b) => b.title.localeCompare(a.title));
+      case "dateAsc":
+        return [...allShows].sort((a, b) => a.updated - b.updated);
+      case "dateDesc":
+        return [...allShows].sort((a, b) => b.updated - a.updated);
+      default:
+        return allShows;
+    }
+  };
+
   return (
     <div>
-      {allShows.map((show) => (
+      <div className="sort-dropdown">
+        <label htmlFor="sort">Sort By: </label>
+        <select id="sort" value={selectedSort} onChange={handleSortChange}>
+          <option value="titleAZ">Title (A-Z)</option>
+          <option value="titleZA">Title (Z-A)</option>
+          <option value="dateAsc">Date Updated (Asc)</option>
+          <option value="dateDesc">Date Updated (Desc)</option>
+        </select>
+      </div>
+      {getSortedShows().map((show) => (
         <div key={show.id}>
           <h3>{show.title}</h3>
           <img src={show.image} alt={`${show.title} Preview`} />
