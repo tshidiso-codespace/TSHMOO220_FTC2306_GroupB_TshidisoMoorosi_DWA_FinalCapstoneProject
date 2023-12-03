@@ -4,26 +4,29 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header.jsx";
 import ShowPreviews from "./components/ShowPreviews.jsx";
 import Seasons from "./components/Seasons.jsx";
-import Episodes from "./components/Episodes.jsx"; // Import Episodes component
+import Episodes from "./components/Episodes.jsx";
+import Favourites from "./components/Favourites.jsx";
 
 function App() {
   return (
-    <div>
-      <Header />
-      <Routes>
-        {/* Route for the Seasons component */}
-        <Route
-          path="/seasons/:id"
-          element={<Seasons show={location.state && location.state.show} />}
-        >
-          {/* Nested route for the Episodes component */}
-          <Route path="episodes/:seasonNumber" element={<Episodes />} />
-        </Route>
+    <Router>
+      <div>
+        <Header />
+        <Routes>
+          {/* Define the Favourites route at the top level */}
+          <Route path="/favourites" element={<Favourites />} />
 
-        {/* Default route for the ShowPreviews component */}
-        <Route path="/" element={<ShowPreviews />} />
-      </Routes>
-    </div>
+          {/* Update the parent route path with a trailing "*" */}
+          <Route path="/seasons/:id/*" element={<Seasons />} />
+
+          {/* Other routes remain the same */}
+          <Route path="/episodes/:seasonNumber" element={<Episodes />} />
+
+          {/* Default route */}
+          <Route path="/" element={<ShowPreviews />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
