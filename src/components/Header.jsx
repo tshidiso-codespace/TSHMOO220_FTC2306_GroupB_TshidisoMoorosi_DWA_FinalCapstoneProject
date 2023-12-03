@@ -7,14 +7,13 @@ export default function Header() {
 
   return (
     <header className="header">
-      <img
-        src="../images/troll-face.png"
-        className="header--image"
-        alt="Podcast Logo"
-      />
       <h2 className="header--title">Tshidiso's Podcast App</h2>
       <button onClick={() => navigate("/favourites")}>Favourites</button>
-      <img src="../images/sort.png" className="sort--icon" />
+      <img
+        src="../images/magnifying-glass.png"
+        className="search--icon"
+        alt="Search Icon"
+      />
     </header>
   );
 }

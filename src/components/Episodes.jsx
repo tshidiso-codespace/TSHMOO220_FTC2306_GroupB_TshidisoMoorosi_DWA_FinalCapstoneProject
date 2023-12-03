@@ -53,7 +53,6 @@ const Episodes = () => {
       .flatMap((season) => season.episodes)
       .find((e) => e.episode === episodeId);
     console.log(episodeId);
-    32;
 
     if (!selectedEpisodeData) {
       console.error("Selected episode not found.");
