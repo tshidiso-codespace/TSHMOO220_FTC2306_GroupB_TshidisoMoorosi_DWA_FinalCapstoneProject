@@ -79,10 +79,16 @@ const Episodes = () => {
       });
     } else {
       // Add to favorites
+      const currentDate = new Date();
       setFavoriteEpisodes((prevFavorites) => {
         const updatedFavorites = [
           ...prevFavorites,
-          { compoundKey, title: episode.title, file: episode.file },
+          {
+            compoundKey,
+            title: episode.title,
+            file: episode.file,
+            updated: currentDate.getTime(),
+          },
         ];
         localStorage.setItem(
           "favoriteEpisodes",
