@@ -5,7 +5,20 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import Favourites from "./Favourites"; // Import the Favourites component
 
+/**
+ * The `Episodes` component displays a list of episodes for a specific season of a podcast show.
+ * It allows users to mark episodes as favorites and includes an audio player for each episode.
+ * The component also provides a button to navigate back to the Seasons component.
+ *
+ * @component
+ * @example
+ * // Usage within another component or route
+ * import Episodes from "./Episodes";
+ * // ...
+ * <Episodes />
+ */
 const Episodes = () => {
+  // State variables for managing season data and favorite episodes
   const [seasonData, setSeasonData] = useState(null);
   const [favoriteEpisodes, setFavoriteEpisodes] = useState(() => {
     const storedFavorites = localStorage.getItem("favoriteEpisodes");
@@ -13,11 +26,16 @@ const Episodes = () => {
     return Array.isArray(parsedFavorites) ? parsedFavorites : [];
   });
 
+  // Extract season number and show id from the URL parameters
   const { seasonNumber, id } = useParams();
+
+  // Extract show information from the React Router location state
   const { show } = useLocation().state;
 
+  // Navigation function to move back to the Seasons component
   const navigate = useNavigate();
 
+  // Fetch season data for the specified show and season number
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,23 +54,26 @@ const Episodes = () => {
     fetchData();
   }, [show, seasonNumber]);
 
+  // Render loading state if season data is not available
   if (!seasonData) {
-    return <div>Loading...</div>; // Add a loading state if needed
+    return <div>Loading...</div>;
   }
 
+  // Find the selected season data based on the provided season number
   const selectedSeasonData = seasonData.seasons.find(
     (season) => season.season === parseInt(seasonNumber)
   );
 
+  // Render message if the selected season is not found
   if (!selectedSeasonData) {
     return <div>Season not found...</div>;
   }
 
+  // Toggle favorite status for an episode and update the favorites list
   const handleToggleFavorite = (episodeId, episode) => {
     const selectedEpisodeData = seasonData.seasons
       .flatMap((season) => season.episodes)
       .find((e) => e.episode === episodeId);
-    console.log(episodeId);
 
     if (!selectedEpisodeData) {
       console.error("Selected episode not found.");
@@ -98,11 +119,14 @@ const Episodes = () => {
     }
   };
 
+  // Render the component
   return (
-    <div>
+    <div className="episodes-container">
       <h3>
         {show && show.title} - Season {selectedSeasonData.season} Episodes
       </h3>
+
+      {/* Render each episode with details, favorite toggle, and audio player */}
       {selectedSeasonData.episodes.map((episode) => {
         const compoundKey = `${show.id}_${selectedSeasonData.season}_${episode.episode}`;
         return (
@@ -124,6 +148,8 @@ const Episodes = () => {
           </div>
         );
       })}
+
+      {/* Button to navigate back to the Seasons component */}
       <button onClick={() => navigate(`/seasons/${id}`)}>
         Go Back to Seasons
       </button>
@@ -137,6 +163,7 @@ const Episodes = () => {
   );
 };
 
+// PropTypes for type-checking the 'show' prop
 Episodes.propTypes = {
   show: PropTypes.shape({
     id: PropTypes.string.isRequired,

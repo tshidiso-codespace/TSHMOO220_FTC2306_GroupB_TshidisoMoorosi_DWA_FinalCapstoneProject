@@ -72,6 +72,18 @@ button:focus-visible {
   }
 }
 
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px; /* Adjust as needed */
+  padding: 1rem;
+}
 
 .show--preview {
   width: 30rem;
@@ -90,4 +102,59 @@ button:focus-visible {
 .show--title {
   padding: 1rem 0 0.25rem;
   font-weight: bold;
+}
+
+/* seasons.css */
+
+.seasons-container {
+  max-width: 800px; /* Adjust based on your design */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.seasons-container div {
+  margin-bottom: 20px;
+}
+
+.seasons-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+.seasons-container button {
+  background-color: #646cff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* episodes.css */
+
+.episodes-container {
+  max-width: 800px; /* Adjust based on your design */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.episodes-container h3 {
+  margin-bottom: 20px;
+}
+
+.episodes-container div {
+  margin-bottom: 20px;
+}
+
+.episodes-container input {
+  margin-right: 5px;
+}
+
+.episodes-container button {
+  background-color: #646cff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
 }

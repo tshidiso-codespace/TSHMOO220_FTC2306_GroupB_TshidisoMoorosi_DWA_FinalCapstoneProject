@@ -10,13 +10,31 @@ import {
 import PropTypes from "prop-types";
 import Episodes from "./Episodes";
 
+/**
+ * The `Seasons` component displays information about the seasons of a podcast show.
+ * It includes a list of seasons with details such as season number, episode count,
+ * and a button to navigate to the episodes of a selected season.
+ *
+ * @component
+ * @example
+ * // Usage within another component or route
+ * import Seasons from "./Seasons";
+ * // ...
+ * <Seasons />
+ */
 const Seasons = () => {
+  // State variable for managing season data
   const [seasonData, setSeasonData] = useState(null);
+
+  // Extract show id from the URL parameters
   const { id } = useParams();
+
+  // Extract show and location information using React Router hooks
   const location = useLocation();
   const navigate = useNavigate();
   const show = location.state && location.state.show;
 
+  // Fetch season data for the specified show on component mount or show change
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,29 +53,31 @@ const Seasons = () => {
     fetchData();
   }, [show]);
 
+  // Handle selection of a season and navigate to the associated Episodes component
   const handleSeasonSelect = (seasonNumber) => {
-    // Use navigate to change the URL and navigate to the Episodes component
     navigate(`/seasons/${id}/episodes/${seasonNumber}`, {
       state: { show, seasonNumber },
     });
   };
 
+  // Render loading state if season data is not available
   if (!seasonData) {
-    return <div>Loading...</div>; // Add a loading state if needed
+    return <div>Loading...</div>;
   }
 
+  // Render the component
   return (
-    <div>
+    <div className="seasons-container">
+      {/* Display show title and header */}
       <h3>{show && show.title} - Seasons</h3>
 
+      {/* Define routes for the Seasons and Episodes components */}
       <Routes>
-        {/* Route for the Seasons component */}
         <Route path="/" element={<div>Default Season View</div>} />
-
-        {/* Nested route for the Episodes component */}
         <Route path="episodes/:seasonNumber" element={<Episodes />} />
       </Routes>
 
+      {/* Render season details and buttons for each season */}
       {(!location.pathname.includes("/episodes/") || !seasonData) &&
         seasonData.seasons.map((season) => (
           <div key={season.season}>
@@ -76,6 +96,7 @@ const Seasons = () => {
   );
 };
 
+// PropTypes for type-checking the 'show' prop
 Seasons.propTypes = {
   show: PropTypes.shape({
     id: PropTypes.string.isRequired,

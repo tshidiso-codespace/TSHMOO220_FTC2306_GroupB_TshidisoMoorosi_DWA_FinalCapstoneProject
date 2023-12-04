@@ -10,19 +10,23 @@ import Favourites from "./components/Favourites.jsx";
 function App() {
   return (
     <Router>
-      <div>
+      {/* Main container for the entire app */}
+      <div className="app">
+        {/* Header component displaying the app title and navigation button */}
         <Header />
+
+        {/* Routing setup using React Router's `Routes` component */}
         <Routes>
-          {/* Define the Favourites route at the top level */}
+          {/* Route for displaying the user's favorite episodes */}
           <Route path="/favourites" element={<Favourites />} />
 
-          {/* Update the parent route path with a trailing "*" */}
+          {/* Route for displaying seasons and episodes based on the show ID */}
           <Route path="/seasons/:id/*" element={<Seasons />} />
 
-          {/* Other routes remain the same */}
+          {/* Route for displaying individual episodes */}
           <Route path="/episodes/:seasonNumber" element={<Episodes />} />
 
-          {/* Default route */}
+          {/* Default route for displaying show previews */}
           <Route path="/" element={<ShowPreviews />} />
         </Routes>
       </div>

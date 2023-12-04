@@ -3,7 +3,20 @@ import { genres } from "../data.jsx";
 import Seasons from "./Seasons.jsx";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * The `ShowPreviews` component renders a list of podcast shows and allows users to
+ * interact with and navigate through the available shows. Users can view show details
+ * and select a show to see its associated seasons.
+ *
+ * @component
+ * @example
+ * // Usage within another component or route
+ * import ShowPreviews from "./ShowPreviews";
+ * // ...
+ * <ShowPreviews />
+ */
 const ShowPreviews = () => {
+  // State variables for managing show data
   const [allShows, setAllShows] = React.useState([]);
   const navigate = useNavigate();
   const [selectedShow, setSelectedShow] = React.useState(null);
@@ -13,6 +26,7 @@ const ShowPreviews = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [isSearchOverlayOpen, setIsSearchOverlayOpen] = React.useState(false);
 
+  // Fetch show data from external API
   React.useEffect(() => {
     fetch("https://podcast-api.netlify.app/shows")
       .then((res) => res.json())
@@ -75,7 +89,7 @@ const ShowPreviews = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <div className="sort-dropdown">
         <label htmlFor="sort">Sort By: </label>
         <select id="sort" value={selectedSort} onChange={handleSortChange}>
@@ -202,6 +216,7 @@ const ShowPreviews = () => {
       ))}
       {selectedShow && <Seasons show={selectedShow} />}
 
+      {/* Render shows based on selected sort option */}
       {getSortedShows().map((show) => (
         <div className="show--preview" key={show.id}>
           <h3 className="show--title">{show.title}</h3>
