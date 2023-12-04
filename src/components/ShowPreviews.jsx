@@ -180,7 +180,7 @@ const ShowPreviews = () => {
       )}
 
       {/* Render filtered shows */}
-      {/* {filteredShows.map((show) => (
+      {filteredShows.map((show) => (
         <div className="show--preview" key={show.id}>
           <h3 className="show--title">{show.title}</h3>
           <img
@@ -200,7 +200,7 @@ const ShowPreviews = () => {
           </button>
         </div>
       ))}
-      {selectedShow && <Seasons show={selectedShow} />} */}
+      {selectedShow && <Seasons show={selectedShow} />}
 
       {getSortedShows().map((show) => (
         <div className="show--preview" key={show.id}>
